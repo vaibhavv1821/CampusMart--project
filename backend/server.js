@@ -1,13 +1,28 @@
 require("dotenv").config();
-console.log("MONGO_URI:", process.env.MONGO_URI);
+const express = require("express");
+const mongoose = require("mongoose");
 
-const app = require("./src/app");
-const connectDB = require("./src/config/db");
+const app = express();
 
-const PORT = process.env.PORT || 5000;
+// Middleware
+app.use(express.json());
 
-connectDB().then(() => {
-  app.listen(PORT, () => {
-    console.log(`🚀 CampusMart server running on port ${PORT}`);
+// Connect MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("✅ MongoDB Connected");
+
+    const PORT = process.env.PORT || 5000;
+
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("❌ MongoDB Error:", err);
   });
+
+// Test route
+app.get("/", (req, res) => {
+  res.send("CampusMart API running");
 });
