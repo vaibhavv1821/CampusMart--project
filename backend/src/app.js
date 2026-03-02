@@ -4,6 +4,7 @@ const { errorHandler } = require("./middlewares/errorMiddleware");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
+const ratingRoutes = require("./routes/ratingRoutes");
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/ratings", ratingRoutes);
 
 app.use(errorHandler);
 
